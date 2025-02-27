@@ -29,18 +29,30 @@ const DisplayStudents = ({ contract }) => {
     <div>
       <h2>Student List</h2>
       {students.length > 0 ? (
-        <ul>
-          {students.map((student, index) => (
-            <li key={index}>
-              <p>ID: {student.id.toString()}</p>
-              <p>Name: {student.name}</p>
-              <p>Surname: {student.surname}</p>
-              <p>Year of Admission: {student.yearOfAdmission.toString()}</p>
-              <p>Contacts: {student.contacts}</p>
-              <p>Village: {student.village}</p>
-            </li>
-          ))}
-        </ul>
+        <table border="1" cellPadding="8" style={{ width: "100%", textAlign: "left", borderCollapse: "collapse" }}>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Surname</th>
+              <th>Year of Admission</th>
+              <th>Contacts</th>
+              <th>Village</th>
+            </tr>
+          </thead>
+          <tbody>
+            {students.map((student, index) => (
+              <tr key={index}>
+                <td>{student.id.toString()}</td>
+                <td>{student.name}</td>
+                <td>{student.surname}</td>
+                <td>{student.yearOfAdmission.toString()}</td>
+                <td>{student.contacts}</td>
+                <td>{student.village}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       ) : (
         <p>No students found.</p>
       )}

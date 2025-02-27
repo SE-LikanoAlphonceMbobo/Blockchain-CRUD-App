@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { ethers } from "ethers";
-import Connection from "./components/connection";
+import Connection from "./components/Connection";
 import RegisterStudent from "./components/RegisterStudent";
 import DisplayStudents from "./components/DisplayStudents";
+import UpdateStudent from "./components/UpdateStudent"; // Import UpdateStudent
 import { contractAddress, contractAbi } from "./utils/abi";
 
 const App = () => {
@@ -17,12 +18,18 @@ const App = () => {
     setAccount(walletAddress);
   };
 
+  const refreshStudents = () => {
+    // Trigger re-fetching students from the contract
+    console.log("Refreshing students...");
+  };
+
   return (
     <div>
       <Connection onWalletConnected={initializeContract} />
       {contract && (
         <>
-          <RegisterStudent contract={contract} refreshStudents={() => {}} />
+          <RegisterStudent contract={contract} refreshStudents={refreshStudents} />
+          <UpdateStudent contract={contract} refreshStudents={refreshStudents} /> {/* Add UpdateStudent */}
           <DisplayStudents contract={contract} />
         </>
       )}

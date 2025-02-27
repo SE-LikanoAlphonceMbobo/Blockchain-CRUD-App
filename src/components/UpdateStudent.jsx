@@ -1,28 +1,42 @@
 import { useState } from "react";
 
-const RegisterStudent = ({ contract, refreshStudents }) => {
+const UpdateStudent = ({ contract, refreshStudents }) => {
+  const [studentId, setStudentId] = useState("");
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [yearOfAdmission, setYearOfAdmission] = useState("");
   const [contacts, setContacts] = useState("");
   const [village, setVillage] = useState("");
 
-  const handleRegister = async () => {
+  const handleUpdate = async () => {
     try {
-      const tx = await contract.addStudent(name, surname, yearOfAdmission, contacts, village);
+      const tx = await contract.updateStudent(
+        studentId,
+        name,
+        surname,
+        yearOfAdmission,
+        contacts,
+        village
+      );
       await tx.wait(); // Wait for the transaction to be mined
-      console.log("Student added:", name);
-      refreshStudents(); // Refresh student list after registration
-      alert(`Student ${name} has been successfully added!`); // Show alert after student is added
+      console.log("Student updated:", studentId);
+      refreshStudents(); // Refresh student list after updating
+      alert(`Student ID ${studentId} has been updated successfully!`);
     } catch (error) {
-      console.error("Error adding student:", error);
-      alert("There was an error adding the student. Please try again.");
+      console.error("Error updating student:", error);
+      alert("There was an error updating the student. Please try again.");
     }
   };
 
   return (
     <div>
-      <h3>Register New Student</h3>
+      <h3>Update Student</h3>
+      <input
+        type="number"
+        placeholder="Student ID"
+        value={studentId}
+        onChange={(e) => setStudentId(e.target.value)}
+      />
       <input
         type="text"
         placeholder="Name"
@@ -53,9 +67,9 @@ const RegisterStudent = ({ contract, refreshStudents }) => {
         value={village}
         onChange={(e) => setVillage(e.target.value)}
       />
-      <button onClick={handleRegister}>Register Student</button>
+      <button onClick={handleUpdate}>Update Student</button>
     </div>
   );
 };
 
-export default RegisterStudent;
+export default UpdateStudent;
