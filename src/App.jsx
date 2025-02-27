@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { ethers } from "ethers";
 import Connection from "./components/connection";
 import RegisterStudent from "./components/RegisterStudent";
 import DisplayStudents from "./components/DisplayStudents";
 import UpdateStudent from "./components/UpdateStudent";
-import DeleteStudent from "./components/DeleteStudent"; // Import DeleteStudent
+import DeleteStudent from "./components/DeleteStudent";
 import { contractAddress, contractAbi } from "./utils/abi";
 
 const App = () => {
@@ -25,17 +26,31 @@ const App = () => {
   };
 
   return (
-    <div>
-      <Connection onWalletConnected={initializeContract} />
-      {contract && (
-        <>
-          <RegisterStudent contract={contract} refreshStudents={refreshStudents} />
-          <UpdateStudent contract={contract} refreshStudents={refreshStudents} />
-          <DeleteStudent contract={contract} refreshStudents={refreshStudents} /> {/* Add DeleteStudent */}
-          <DisplayStudents contract={contract} />
-        </>
-      )}
-    </div>
+    <Router>
+      <div>
+        <Connection onWalletConnected={initializeContract} />
+
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Register Student</Link>
+            </li>
+            <li>
+              <Link to="/students">View Students</Link>
+            </li>
+          </ul>
+        </nav>
+
+        {contract && (
+          <Routes>
+            <Route path="/" element={<RegisterStudent contract={contract} refreshStudents={refreshStudents} />} />
+            <Route path="/students" element={<DisplayStudents contract={contract} />} />
+            <Route path="/update/:id" element={<UpdateStudent contract={contract} refreshStudents={refreshStudents} />} />
+            <Route path="/delete/:id" element={<DeleteStudent contract={contract} refreshStudents={refreshStudents} />} />
+          </Routes>
+        )}
+      </div>
+    </Router>
   );
 };
 

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const DisplayStudents = ({ contract }) => {
@@ -29,7 +30,7 @@ const DisplayStudents = ({ contract }) => {
     <div>
       <h2>Student List</h2>
       {students.length > 0 ? (
-        <table border="1" cellPadding="8" style={{ width: "100%", textAlign: "left", borderCollapse: "collapse" }}>
+        <table>
           <thead>
             <tr>
               <th>ID</th>
@@ -38,6 +39,7 @@ const DisplayStudents = ({ contract }) => {
               <th>Year of Admission</th>
               <th>Contacts</th>
               <th>Village</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -49,6 +51,14 @@ const DisplayStudents = ({ contract }) => {
                 <td>{student.yearOfAdmission.toString()}</td>
                 <td>{student.contacts}</td>
                 <td>{student.village}</td>
+                <td>
+                  <button>
+                    <Link to={`/update/${student.id.toString()}`}>Update</Link>
+                  </button>
+                  <button>
+                    <Link to={`/delete/${student.id.toString()}`}>Delete</Link>
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
