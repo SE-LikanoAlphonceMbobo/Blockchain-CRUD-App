@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { ethers } from "ethers";
-import Connection from "./components/Connection";
+import Connection from "./components/connection";
 import RegisterStudent from "./components/RegisterStudent";
 import DisplayStudents from "./components/DisplayStudents";
-import UpdateStudent from "./components/UpdateStudent"; // Import UpdateStudent
+import UpdateStudent from "./components/UpdateStudent";
+import DeleteStudent from "./components/DeleteStudent"; // Import DeleteStudent
 import { contractAddress, contractAbi } from "./utils/abi";
 
 const App = () => {
@@ -29,7 +30,8 @@ const App = () => {
       {contract && (
         <>
           <RegisterStudent contract={contract} refreshStudents={refreshStudents} />
-          <UpdateStudent contract={contract} refreshStudents={refreshStudents} /> {/* Add UpdateStudent */}
+          <UpdateStudent contract={contract} refreshStudents={refreshStudents} />
+          <DeleteStudent contract={contract} refreshStudents={refreshStudents} /> {/* Add DeleteStudent */}
           <DisplayStudents contract={contract} />
         </>
       )}
